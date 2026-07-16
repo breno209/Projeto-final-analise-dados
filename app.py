@@ -2,6 +2,17 @@ from flask import Flask,jsonify,request
 from flask_cors import CORS
 from sklearn.linear_model import LinearRegression
 import pandas as pd
+from supabase import create_client
+from dotenv import load_dotenv
+import os 
+
+load_dotenv()
+
+tabela = create_client(
+    os.getenv("SUPABASE_URL"),
+    os.getenv("SUPABASE_KEY")
+)
+
 #Criar o modelo de ML
 df= pd.read_csv("dataset_carros_usados.csv")
 
@@ -34,6 +45,21 @@ def retorno():
             "num_revisoes":[dados["num_revisoes"]]
         })
         preco = modelo.predict(carro)[0]
+        preco_formatado = round(float(preco),2)
+        registros = {
+            "ano":dados["ano"],
+            "quilometragem":dados["quilometragem"],
+            "motor":dados["motor"],
+            "num_revisoes":dados["num_revisoes"],
+            "preco":preco_formatado
+        }
+        
+        tabela.table("historico_previsoes").insert(registros).execute()
+        
+        
+        
+        
+        
         return jsonify({
             
             "preço":round(float(preco),2)
