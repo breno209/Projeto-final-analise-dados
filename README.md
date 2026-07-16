@@ -280,6 +280,8 @@ Desenvolvedor em formação, apaixonado por dados, IA e por transformar números
 
 ---
 
+link do meu projeto:https://road-price-predict.lovable.app
+
 ### ⭐ Gostou do projeto?
 
 Deixe uma estrela no repositório — isso ajuda muito e motiva a continuar evoluindo o projeto!
